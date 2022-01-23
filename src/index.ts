@@ -10,7 +10,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/gradient", (req, res) => {
-  const gradientBuffer = createGradient();
+  // TODO get params from query and generate correct map for color gradients
+  const points = [
+    { x: 0, y: 0, color: "#FFFFFF" },
+    { x: 200, y: 0, color: "#E67669" },
+    { x: 100, y: 200, color: "#776EDD" },
+    { x: 500, y: 300, color: "#FFFFFF" },
+  ];
+  const gradientBuffer = createGradient({ width: 500, height: 300, points, noise: true });
   res.write(gradientBuffer);
   res.end();
 });

@@ -2,25 +2,26 @@ import { CanvasRenderingContext2D, createCanvas, loadImage } from "canvas";
 
 // localhost/gradient?width=200&height=300&baseColor=#f2f2f2&
 
-export const createGradient = (width = 500, height = 300, baseColor = "#f2f2f2") => {
+type GradientConfig = {
+  width: number;
+  height: number;
+  points: { x: number; y: number; color: string }[];
+  noise?: boolean;
+};
+
+export const createGradient = (config: GradientConfig) => {
+  const { width, height, points, noise } = config;
+
   const canvas = createCanvas(width, height);
   const ctx = canvas.getContext("2d");
 
-  // TODO use points based on query params
-  let points2 = [
-    { x: 0, y: 0, c: "#FF0000" },
-    { x: 70, y: 200, c: "#FFFF00" },
-    { x: 500, y: 300, c: "#00FF00" },
-    { x: 121, y: 200, c: "#00FFFF" },
-    { x: 160, y: 10, c: "#FF00FF" },
-  ];
-
-  let points = [
-    { x: 0, y: 0, c: "#FFFFFF" },
-    { x: 200, y: 0, c: "#E67669" },
-    { x: 100, y: 200, c: "#776EDD" },
-    { x: 500, y: 300, c: "#FFFFFF" },
-  ];
+  //   let points2 = [
+  //     { x: 0, y: 0, c: "#FF0000" },
+  //     { x: 70, y: 200, c: "#FFFF00" },
+  //     { x: 500, y: 300, c: "#00FF00" },
+  //     { x: 121, y: 200, c: "#00FFFF" },
+  //     { x: 160, y: 10, c: "#FF00FF" },
+  //   ];
 
   //   putCross(ctx, points); // optional, only to show the original point position
   ctx.globalCompositeOperation = "destination-over"; // to show the cross points over the gradient
@@ -33,12 +34,14 @@ export const createGradient = (width = 500, height = 300, baseColor = "#f2f2f2")
   let x, y;
   let mixColor;
 
-  for (x = 0; x < canvas.width; x++) {
-    for (y = 0; y < canvas.height; y++) {
-      const a = Math.floor(Math.random() * 60);
+  if (noise) {
+    for (x = 0; x < canvas.width; x++) {
+      for (y = 0; y < canvas.height; y++) {
+        const a = Math.floor(Math.random() * 60);
 
-      ctx.fillStyle = "rgba(" + a + "," + a + "," + a + "," + 0.2 + ")";
-      ctx.fillRect(x, y, 1, 1);
+        ctx.fillStyle = "rgba(" + a + "," + a + "," + a + "," + 0.2 + ")";
+        ctx.fillRect(x, y, 1, 1);
+      }
     }
   }
 
@@ -101,9 +104,9 @@ function getWeightedColorMix(points: any[], ratios: any[]) {
   let g = 0;
   let b = 0;
   for (const [ind, point] of points.entries()) {
-    r += Math.round(parseInt(point.c.substring(1, 3), 16) * ratios[ind]);
-    g += Math.round(parseInt(point.c.substring(3, 5), 16) * ratios[ind]);
-    b += Math.round(parseInt(point.c.substring(5, 7), 16) * ratios[ind]);
+    r += Math.round(parseInt(point.color.substring(1, 3), 16) * ratios[ind]);
+    g += Math.round(parseInt(point.color.substring(3, 5), 16) * ratios[ind]);
+    b += Math.round(parseInt(point.color.substring(5, 7), 16) * ratios[ind]);
   }
 
   let result =
