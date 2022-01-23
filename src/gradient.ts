@@ -1,13 +1,7 @@
-import { CanvasRenderingContext2D, createCanvas, loadImage } from "canvas";
+import { CanvasRenderingContext2D, createCanvas } from "canvas";
+import { GradientConfig } from "./types";
 
 // localhost/gradient?width=200&height=300&baseColor=#f2f2f2&
-
-type GradientConfig = {
-  width: number;
-  height: number;
-  points: { x: number; y: number; color: string }[];
-  noise?: boolean;
-};
 
 export const createGradient = (config: GradientConfig) => {
   const { width, height, points, noise } = config;
