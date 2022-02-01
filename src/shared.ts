@@ -1,7 +1,7 @@
 import { GradientConfig, GradientPoint } from "./types";
 
 export const processParams = (queryParams: any): GradientConfig => {
-  const formattedPoints: GradientPoint[] = [];
+  const formattedPoints: GradientPoint[] = queryParams;
 
   return {
     width: Number(queryParams.width),
@@ -11,7 +11,7 @@ export const processParams = (queryParams: any): GradientConfig => {
   };
 };
 
-export const parsePoints = (points: any): GradientPoint[] => {
+export const parsePoints = (x: string[], y: string[], color: string[]): GradientPoint[] => {
   // FROM
   // x: [ '0', '500' ],
   // y: [ '0', '300' ],
@@ -21,6 +21,12 @@ export const parsePoints = (points: any): GradientPoint[] => {
   // { x: 0, y: 0, color: "#FFFFFF" },
   // { x: 500, y: 300, color: "#FAB555" },
   //   ]
-
-  return [];
+  // const lengths = [x.length, y.length, color.length]
+  // const length = lengths.every((l) => )
+  // console.log(x.entries(), y.entries(), color.entries());
+  const a: GradientPoint[] = [];
+  x.map((x, i) => {
+    a.push({ x: Number(x), y: Number(y[i]), color: color[i] });
+  });
+  return a;
 };
