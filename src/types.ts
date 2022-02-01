@@ -1,3 +1,12 @@
+export type GradientQueryParams = {
+  width: string;
+  height: string;
+  x: string[];
+  y: string[];
+  color: string[];
+  noise?: string;
+};
+
 export type GradientConfig = {
   width: number;
   height: number;
