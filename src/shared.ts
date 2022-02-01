@@ -11,7 +11,7 @@ export const processParams = (queryParams: any): GradientConfig => {
   };
 };
 
-const generatePoints = (points: any): GradientPoint[] => {
+export const parsePoints = (points: any): GradientPoint[] => {
   // FROM
   // x: [ '0', '500' ],
   // y: [ '0', '300' ],
